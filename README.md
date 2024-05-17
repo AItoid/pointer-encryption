@@ -1,7 +1,7 @@
 ### PointerEncryption
 Simple pointer-protection to prevent easy-access of pointers.
 
-```
+```cpp
 v215 = v3;
   v216 = retaddr;
   v187 = v5;
