@@ -1,6 +1,8 @@
 ### PointerEncryption
 Simple pointer-protection to prevent easy-access of pointers.
 
+### Pseudo-code
+Below is the produced pseudo-code from trying to access a pointer once in IDA.
 ```cpp
 v215 = v3;
   v216 = retaddr;
