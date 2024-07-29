@@ -69,6 +69,7 @@ public:
             keyArray[i] >>= 0xF;
         }
 
+        // NOTE: Move into previous loop?
         for (int i = 0; i < sizeof(keyArray) / sizeof(std::uintptr_t); i++)
         {
             ptrAddress ^= keyArray[i];
@@ -120,6 +121,7 @@ public:
             keyArray[i] >>= 0xF;
         }
 
+        // NOTE: Move into previous loop?
         for (int i = 0; i < sizeof(keyArray) / sizeof(std::uintptr_t); i++)
         {
             ptrAddress ^= keyArray[i];
