@@ -1,6 +1,4 @@
-### 
-pointer-encryption
-
+### pointer-encryption
 Simple pointer-protection to prevent easy-access of pointers.
 
 ### Pseudo-code
