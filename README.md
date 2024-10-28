@@ -62,7 +62,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 
   v47 = (unsigned __int64)operator new(0x10ui64);
   *(_OWORD *)v47 = 0i64;
-  v3 = qword_140007B48;
+  v3 = qword_140007B30;
   v43[0] = 3355086582i64;
   v4 = (_DWORD *)(*(_QWORD *)NtCurrentTeb()->ThreadLocalStoragePointer + 4i64);
   v48 = v4;
@@ -71,55 +71,55 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B28);
     if ( dword_140007B28 == -1 )
     {
-      qword_140006738 = v3;
+      qword_140006768 = v3;
       Init_thread_footer(&dword_140007B28);
     }
   }
-  v43[1] = qword_140006738;
+  v43[1] = qword_140006768;
   v43[2] = 2851533032i64;
-  if ( dword_140006730 > *v4 )
+  if ( dword_140007B38 > *v4 )
   {
-    Init_thread_header(&dword_140006730);
-    if ( dword_140006730 == -1 )
+    Init_thread_header(&dword_140007B38);
+    if ( dword_140007B38 == -1 )
     {
-      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
-      Init_thread_footer(&dword_140006730);
+      qword_140007B20 = (__int64)GetModuleHandleA(0i64);
+      Init_thread_footer(&dword_140007B38);
     }
   }
-  v43[3] = qword_140007B30;
+  v43[3] = qword_140007B20;
   v43[4] = 1519974081i64;
-  if ( dword_140007B18 > *v4 )
+  if ( dword_140006760 > *v4 )
   {
-    Init_thread_header(&dword_140007B18);
-    if ( dword_140007B18 == -1 )
+    Init_thread_header(&dword_140006760);
+    if ( dword_140006760 == -1 )
     {
-      qword_140006778 = (__int64)NtCurrentPeb();
-      Init_thread_footer(&dword_140007B18);
+      qword_140006780 = (__int64)NtCurrentPeb();
+      Init_thread_footer(&dword_140006760);
     }
   }
-  v43[5] = qword_140006778;
+  v43[5] = qword_140006780;
   v43[6] = 1822383754i64;
   v43[7] = 4214798505i64;
-  if ( dword_140006730 > *v4 )
+  if ( dword_140007B38 > *v4 )
   {
-    Init_thread_header(&dword_140006730);
-    if ( dword_140006730 == -1 )
+    Init_thread_header(&dword_140007B38);
+    if ( dword_140007B38 == -1 )
     {
-      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
-      Init_thread_footer(&dword_140006730);
+      qword_140007B20 = (__int64)GetModuleHandleA(0i64);
+      Init_thread_footer(&dword_140007B38);
     }
   }
-  v5 = qword_140007B30;
-  if ( dword_140007B18 > *v4 )
+  v5 = qword_140007B20;
+  if ( dword_140006760 > *v4 )
   {
-    Init_thread_header(&dword_140007B18);
-    if ( dword_140007B18 == -1 )
+    Init_thread_header(&dword_140006760);
+    if ( dword_140006760 == -1 )
     {
-      qword_140006778 = (__int64)NtCurrentPeb();
-      Init_thread_footer(&dword_140007B18);
+      qword_140006780 = (__int64)NtCurrentPeb();
+      Init_thread_footer(&dword_140006760);
     }
   }
-  v43[8] = qword_140006778 ^ v5;
+  v43[8] = qword_140006780 ^ v5;
   v43[9] = 1377228170i64;
   v43[10] = 3974039857i64;
   v43[11] = 1571159279i64;
@@ -128,22 +128,22 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B28);
     if ( dword_140007B28 == -1 )
     {
-      qword_140006738 = v3;
+      qword_140006768 = v3;
       Init_thread_footer(&dword_140007B28);
     }
   }
-  v6 = qword_140006738;
-  if ( dword_140006730 > *v4 )
+  v6 = qword_140006768;
+  if ( dword_140007B38 > *v4 )
   {
-    Init_thread_header(&dword_140006730);
-    if ( dword_140006730 == -1 )
+    Init_thread_header(&dword_140007B38);
+    if ( dword_140007B38 == -1 )
     {
-      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
-      Init_thread_footer(&dword_140006730);
+      qword_140007B20 = (__int64)GetModuleHandleA(0i64);
+      Init_thread_footer(&dword_140007B38);
     }
   }
-  v43[12] = qword_140007B30 ^ v6;
-  v43[13] = 2511139753i64;
+  v43[12] = qword_140007B20 ^ v6;
+  v43[13] = 2511139754i64;
   v43[14] = 774692834i64;
   v43[15] = 2186181588i64;
   if ( dword_140007B28 > *v4 )
@@ -151,46 +151,46 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B28);
     if ( dword_140007B28 == -1 )
     {
-      qword_140006738 = v3;
+      qword_140006768 = v3;
       Init_thread_footer(&dword_140007B28);
     }
   }
-  v7 = qword_140006738;
-  if ( dword_140007B18 > *v4 )
+  v7 = qword_140006768;
+  if ( dword_140006760 > *v4 )
   {
-    Init_thread_header(&dword_140007B18);
-    if ( dword_140007B18 == -1 )
+    Init_thread_header(&dword_140006760);
+    if ( dword_140006760 == -1 )
     {
-      qword_140006778 = (__int64)NtCurrentPeb();
-      Init_thread_footer(&dword_140007B18);
+      qword_140006780 = (__int64)NtCurrentPeb();
+      Init_thread_footer(&dword_140006760);
     }
   }
-  v43[16] = qword_140006778 ^ v7;
-  v43[17] = 1299201289i64;
+  v43[16] = qword_140006780 ^ v7;
+  v43[17] = 1299201292i64;
   v8 = 0;
   v9 = 0;
   v45 = 0;
   v10 = 0i64;
   v11 = v43;
   v12 = 3178;
-  v13 = (unsigned int *)&unk_140006740;
+  v13 = (unsigned int *)&unk_140006730;
   do
   {
     if ( v8 < 12 )
     {
-      if ( dword_140007B38 > *v4 )
+      if ( dword_140007B3C > *v4 )
       {
-        Init_thread_header(&dword_140007B38);
-        if ( dword_140007B38 == -1 )
+        Init_thread_header(&dword_140007B3C);
+        if ( dword_140007B3C == -1 )
         {
           if ( !byte_14000672C )
           {
             for ( i = 0; i < 6; ++i )
             {
-              if ( dword_140006780 > *v4 )
+              if ( dword_140006770 > *v4 )
               {
-                Init_thread_header(&dword_140006780);
-                if ( dword_140006780 == -1 )
+                Init_thread_header(&dword_140006770);
+                if ( dword_140006770 == -1 )
                 {
                   v15 = std::_Random_device();
                   dword_140007B14 = -1;
@@ -201,11 +201,11 @@ int __fastcall main(int argc, const char **argv, const char **envp)
                     dword_140006790[j + 1] = v15;
                   }
                   dword_140006790[0] = 624;
-                  Init_thread_footer(&dword_140006780);
+                  Init_thread_footer(&dword_140006770);
                 }
               }
               do
-                v17 = sub_140001CA0(dword_140006790);
+                v17 = sub_140001C90(dword_140006790);
               while ( v17 / 0xFFF001 >= 0x100 );
               v18 = v17 % 0xFFF001 - 2147479553;
               v19 = v18 + 0x80000000;
@@ -215,15 +215,15 @@ int __fastcall main(int argc, const char **argv, const char **envp)
               v4 = v48;
             }
             byte_14000672C = 1;
-            v13 = (unsigned int *)&unk_140006740;
+            v13 = (unsigned int *)&unk_140006730;
           }
-          qword_140006770 = (__int64)&unk_140006740;
-          Init_thread_footer(&dword_140007B38);
+          qword_140006778 = (__int64)&unk_140006730;
+          Init_thread_footer(&dword_140007B3C);
         }
         v9 = v45;
       }
-      if ( qword_140006770 )
-        *v11 = *(int *)(v10 + qword_140006770) ^ (unsigned __int64)*v11;
+      if ( qword_140006778 )
+        *v11 = *(int *)(v10 + qword_140006778) ^ (unsigned __int64)*v11;
     }
     v20 = v8 + 1;
     v21 = ((2 * v8 * v8 + 207)
@@ -246,62 +246,62 @@ int __fastcall main(int argc, const char **argv, const char **envp)
   }
   while ( v20 < 0x12 );
   sub_140001030("Encrypted: 0x%p\n", v22);
-  v23 = qword_140007B48;
+  v23 = qword_140007B30;
   v44[0] = 3355086582i64;
   if ( dword_140007B28 > *v4 )
   {
     Init_thread_header(&dword_140007B28);
     if ( dword_140007B28 == -1 )
     {
-      qword_140006738 = v23;
+      qword_140006768 = v23;
       Init_thread_footer(&dword_140007B28);
     }
   }
-  v44[1] = qword_140006738;
+  v44[1] = qword_140006768;
   v44[2] = 2851533032i64;
-  if ( dword_140006730 > *v4 )
+  if ( dword_140007B38 > *v4 )
   {
-    Init_thread_header(&dword_140006730);
-    if ( dword_140006730 == -1 )
+    Init_thread_header(&dword_140007B38);
+    if ( dword_140007B38 == -1 )
     {
-      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
-      Init_thread_footer(&dword_140006730);
+      qword_140007B20 = (__int64)GetModuleHandleA(0i64);
+      Init_thread_footer(&dword_140007B38);
     }
   }
-  v44[3] = qword_140007B30;
+  v44[3] = qword_140007B20;
   v44[4] = 1519974081i64;
-  if ( dword_140007B18 > *v4 )
+  if ( dword_140006760 > *v4 )
   {
-    Init_thread_header(&dword_140007B18);
-    if ( dword_140007B18 == -1 )
+    Init_thread_header(&dword_140006760);
+    if ( dword_140006760 == -1 )
     {
-      qword_140006778 = (__int64)NtCurrentPeb();
-      Init_thread_footer(&dword_140007B18);
+      qword_140006780 = (__int64)NtCurrentPeb();
+      Init_thread_footer(&dword_140006760);
     }
   }
-  v44[5] = qword_140006778;
+  v44[5] = qword_140006780;
   v44[6] = 1822383754i64;
   v44[7] = 4214798505i64;
-  if ( dword_140006730 > *v4 )
+  if ( dword_140007B38 > *v4 )
   {
-    Init_thread_header(&dword_140006730);
-    if ( dword_140006730 == -1 )
+    Init_thread_header(&dword_140007B38);
+    if ( dword_140007B38 == -1 )
     {
-      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
-      Init_thread_footer(&dword_140006730);
+      qword_140007B20 = (__int64)GetModuleHandleA(0i64);
+      Init_thread_footer(&dword_140007B38);
     }
   }
-  v24 = qword_140007B30;
-  if ( dword_140007B18 > *v4 )
+  v24 = qword_140007B20;
+  if ( dword_140006760 > *v4 )
   {
-    Init_thread_header(&dword_140007B18);
-    if ( dword_140007B18 == -1 )
+    Init_thread_header(&dword_140006760);
+    if ( dword_140006760 == -1 )
     {
-      qword_140006778 = (__int64)NtCurrentPeb();
-      Init_thread_footer(&dword_140007B18);
+      qword_140006780 = (__int64)NtCurrentPeb();
+      Init_thread_footer(&dword_140006760);
     }
   }
-  v44[8] = qword_140006778 ^ v24;
+  v44[8] = qword_140006780 ^ v24;
   v44[9] = 1377228170i64;
   v44[10] = 3974039857i64;
   v44[11] = 1571159279i64;
@@ -310,22 +310,22 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B28);
     if ( dword_140007B28 == -1 )
     {
-      qword_140006738 = v23;
+      qword_140006768 = v23;
       Init_thread_footer(&dword_140007B28);
     }
   }
-  v25 = qword_140006738;
-  if ( dword_140006730 > *v4 )
+  v25 = qword_140006768;
+  if ( dword_140007B38 > *v4 )
   {
-    Init_thread_header(&dword_140006730);
-    if ( dword_140006730 == -1 )
+    Init_thread_header(&dword_140007B38);
+    if ( dword_140007B38 == -1 )
     {
-      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
-      Init_thread_footer(&dword_140006730);
+      qword_140007B20 = (__int64)GetModuleHandleA(0i64);
+      Init_thread_footer(&dword_140007B38);
     }
   }
-  v44[12] = qword_140007B30 ^ v25;
-  v44[13] = 2511139753i64;
+  v44[12] = qword_140007B20 ^ v25;
+  v44[13] = 2511139754i64;
   v44[14] = 774692834i64;
   v44[15] = 2186181588i64;
   if ( dword_140007B28 > *v4 )
@@ -333,22 +333,22 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B28);
     if ( dword_140007B28 == -1 )
     {
-      qword_140006738 = v23;
+      qword_140006768 = v23;
       Init_thread_footer(&dword_140007B28);
     }
   }
-  v26 = qword_140006738;
-  if ( dword_140007B18 > *v4 )
+  v26 = qword_140006768;
+  if ( dword_140006760 > *v4 )
   {
-    Init_thread_header(&dword_140007B18);
-    if ( dword_140007B18 == -1 )
+    Init_thread_header(&dword_140006760);
+    if ( dword_140006760 == -1 )
     {
-      qword_140006778 = (__int64)NtCurrentPeb();
-      Init_thread_footer(&dword_140007B18);
+      qword_140006780 = (__int64)NtCurrentPeb();
+      Init_thread_footer(&dword_140006760);
     }
   }
-  v44[16] = qword_140006778 ^ v26;
-  v44[17] = 1299201289i64;
+  v44[16] = qword_140006780 ^ v26;
+  v44[17] = 1299201292i64;
   v27 = 0;
   v28 = 0;
   v46 = 0;
@@ -359,21 +359,21 @@ int __fastcall main(int argc, const char **argv, const char **envp)
   {
     if ( v27 < 12 )
     {
-      if ( dword_140007B50 > *v4 )
+      if ( dword_140007B3C > *v4 )
       {
-        Init_thread_header(&dword_140007B50);
-        if ( dword_140007B50 == -1 )
+        Init_thread_header(&dword_140007B3C);
+        if ( dword_140007B3C == -1 )
         {
           if ( !byte_14000672C )
           {
             v32 = 0;
-            v33 = (unsigned int *)&unk_140006740;
+            v33 = (unsigned int *)&unk_140006730;
             do
             {
-              if ( dword_140006780 > *v4 )
+              if ( dword_140006770 > *v4 )
               {
-                Init_thread_header(&dword_140006780);
-                if ( dword_140006780 == -1 )
+                Init_thread_header(&dword_140006770);
+                if ( dword_140006770 == -1 )
                 {
                   v34 = std::_Random_device();
                   dword_140007B14 = -1;
@@ -384,11 +384,11 @@ int __fastcall main(int argc, const char **argv, const char **envp)
                     dword_140006790[k + 1] = v34;
                   }
                   dword_140006790[0] = 624;
-                  Init_thread_footer(&dword_140006780);
+                  Init_thread_footer(&dword_140006770);
                 }
               }
               do
-                v36 = sub_140001CA0(dword_140006790);
+                v36 = sub_140001C90(dword_140006790);
               while ( v36 / 0xFFF001 >= 0x100 );
               v37 = v36 % 0xFFF001 - 2147479553;
               v38 = v37 + 0x80000000;
@@ -402,13 +402,13 @@ int __fastcall main(int argc, const char **argv, const char **envp)
             while ( v32 < 6 );
             byte_14000672C = 1;
           }
-          qword_140007B40 = (__int64)&unk_140006740;
-          Init_thread_footer(&dword_140007B50);
+          qword_140006778 = (__int64)&unk_140006730;
+          Init_thread_footer(&dword_140007B3C);
         }
         v28 = v46;
       }
-      if ( qword_140007B40 )
-        *v30 = *(int *)(v29 + qword_140007B40) ^ (unsigned __int64)*v30;
+      if ( qword_140006778 )
+        *v30 = *(int *)(v29 + qword_140006778) ^ (unsigned __int64)*v30;
     }
     v39 = v27 + 1;
     v40 = ((2 * v27 * v27 + 207)
@@ -431,7 +431,6 @@ int __fastcall main(int argc, const char **argv, const char **envp)
   }
   while ( v39 < 0x12 );
   sub_140001030("Decrypted: 0x%p\n", v41);
-  std::istream::get(std::cin);
   return 0;
 }
   ```
