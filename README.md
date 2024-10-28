@@ -2,7 +2,7 @@
 Simple pointer-protection to prevent easy-access of pointers.
 
 ### Pseudo-code
-Below is the produced pseudo-code from encrypting and decrypting a pointer.
+Below is the produced pseudo-code from encrypting and decrypting a pointer in x64.
 ```cpp
 int __fastcall main(int argc, const char **argv, const char **envp)
 {
