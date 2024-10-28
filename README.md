@@ -1,5 +1,5 @@
 ### pointer-encryption
-Simple pointer-protection to prevent easy-access of pointers for x64 and x86.
+Simple pointer encryption to prevent easy-access of pointers for x64 and x86.
 
 ### Security measures
 - Random keys based on RNG.
