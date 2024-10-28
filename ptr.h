@@ -108,11 +108,7 @@ public:
             key_array[i] *= ((i + i) * i) + 0xCF;
             key_array[i] += _byteswap_ulong(0x6F9A5EC1);
             key_array[i] >>= 0xF;
-        }
 
-        // NOTE: Move into previous loop?
-        for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
-        {
             ptr_address ^= key_array[i];
         }
 
@@ -170,11 +166,7 @@ public:
             key_array[i] *= ((i + i) * i) + 0xCF;
             key_array[i] += _byteswap_ulong(0x6F9A5EC1);
             key_array[i] >>= 0xF;
-        }
 
-        // NOTE: Move into previous loop?
-        for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
-        {
             ptr_address ^= key_array[i];
         }
 
