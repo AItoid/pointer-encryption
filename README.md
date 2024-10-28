@@ -7,6 +7,7 @@ Simple pointer-protection to prevent easy-access of pointers for x64 and x86.
 - Dynamic key based on executable base address.
 - Dynamic key based on PEB address.
 - Dynamic key based on pointer encryption class instance.
+- Inlined functions to prevent calling functions in class.
 
 ### Pseudo-code
 Below is the produced pseudo-code from encrypting and decrypting a pointer in x64.
