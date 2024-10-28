@@ -1,134 +1,188 @@
 #pragma once
-#include "include.h"
 
-class Pointer
+#include <iostream>
+#include <Windows.h>
+#include <algorithm>
+#include <random>
+#include "ptr.h"
+
+class pointer_encryption
 {
-public:
-    __forceinline void* GetBase()
+private:
+    __forceinline int gen_random_int(int min, int max)
     {
-        static void* moduleBase = (void*)GetModuleHandleA(nullptr);
-        return moduleBase;
+        static std::mt19937 engine(std::random_device{}());
+        std::uniform_int_distribution<int> dist(min, max);
+        return dist(engine);
     }
 
-    __forceinline void* GetPeb()
+    __forceinline int* get_random_array()
+    {
+        static int random[12];
+        static bool init = false;
+
+        if (!init)
+        {
+            for (int i = 0; i < sizeof(random) / sizeof(std::uintptr_t); i++)
+            {
+                random[i] = gen_random_int(0xFFF, 0xFFFFFF);
+            }
+
+            init = true;
+        }
+
+        return random;
+    }
+
+public:
+    __forceinline void* get_base()
+    {
+        static void* base = (void*)GetModuleHandleA(nullptr);
+        return base;
+    }
+
+    __forceinline void* get_peb()
     {
 #ifdef _WIN64
-        static void* pebBase = (void*)__readgsqword(0x60);
+        static void* peb = (void*)__readgsqword(0x60);
 #else
-        static void* pebBase = (void*)__readfsdword(0x30);
+        static void* peb = (void*)__readfsdword(0x30);
 #endif
-        return pebBase;
+        return peb;
     }
 
-    __forceinline void* GetInstance()
+    __forceinline void* get_instance()
     {
         static void* instance = this;
         return instance;
     }
 
-    __forceinline void* Encrypt(void* inPtr)
+    template <typename t>
+    __forceinline t enc(void* in_ptr)
     {
-        std::uintptr_t ptrAddress = (std::uintptr_t)inPtr;
+        std::uintptr_t ptr_address = (std::uintptr_t)in_ptr;
 
-        std::uintptr_t keyArray[18];
-        keyArray[0] = 0xC7FA8EF6;
-        keyArray[1] = (std::uintptr_t)GetInstance();
-        keyArray[2] = 0xA9F6EFC2;
-        keyArray[3] = (std::uintptr_t)GetBase();
-        keyArray[4] = 0x5A98F6C1;
-        keyArray[5] = (std::uintptr_t)GetPeb();
-        keyArray[6] = 0x6C9F5E8A;
-        keyArray[7] = 0xFB38B773;
-        keyArray[8] = (std::uintptr_t)GetBase() ^ (std::uintptr_t)GetPeb();
-        keyArray[9] = 0x5216D58A;
-        keyArray[10] = 0xECDF0931;
-        keyArray[11] = 0x5DA5FCEF;
-        keyArray[12] = (std::uintptr_t)GetInstance() ^ (std::uintptr_t)GetBase();
-        keyArray[13] = 0x95ACF30D;
-        keyArray[14] = 0x2E2CDFE2;
-        keyArray[15] = 0x824E7BD4;
-        keyArray[16] = (std::uintptr_t)GetInstance() ^ (std::uintptr_t)GetPeb();
-        keyArray[17] = 0x4D703C6C;
+        std::uintptr_t key_array[18];
+        key_array[0] = 0xC7FA8EF6;
+        key_array[1] = (std::uintptr_t)get_instance();
+        key_array[2] = 0xA9F6EFC2;
+        key_array[3] = (std::uintptr_t)get_base();
+        key_array[4] = 0x5A98F6C1;
+        key_array[5] = (std::uintptr_t)get_peb();
+        key_array[6] = 0x6C9F5E8A;
+        key_array[7] = 0xFB38B773;
+        key_array[8] = (std::uintptr_t)get_base() ^ (std::uintptr_t)get_peb();
+        key_array[9] = 0x5216D58A;
+        key_array[10] = 0xECDF0931;
+        key_array[11] = 0x5DA5FCEF;
+        key_array[12] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_base();
+        key_array[13] = 0x95ACF30D;
+        key_array[14] = 0x2E2CDFE2;
+        key_array[15] = 0x824E7BD4;
+        key_array[16] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_peb();
+        key_array[17] = 0x4D703C6C;
 
-        for (int i = 0; i < sizeof(keyArray) / sizeof(std::uintptr_t); i++)
+        for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
         {
-            keyArray[i] ^= (~(i % 2) ^ (i + 1) * (i + 1) >> 0xC) | 0xF;
-            keyArray[i] += ((i + 1) * 0xC6A) ^ 0xCF6A9F;
-            keyArray[i] <<= 0xC;
-            keyArray[i] -= 0x7F9A ^ (~(i % 2) * (i + 1)) | 0xA;
-            keyArray[i] *= ((i + i) * i) + 0x76A;
-            keyArray[i] ^= _byteswap_ulong(0xC5A9E6A1);
-            keyArray[i] >>= 0xC;
+            if (i < 12)
+            {
+                static int* random = get_random_array();
+                if (random)
+                {
+                    key_array[i] ^= random[i];
+                }
+            }
 
-            keyArray[i] *= (~(i % 4) ^ (i + 0xC) * (i + 0xA) >> 0xFF) | 0xA;
-            keyArray[i] -= ((i * 4) * 0x5A8E) ^ 0xA5E89F;
-            keyArray[i] <<= 0xA;
-            keyArray[i] ^= 0xC63EA ^ (~(i % 3) * (i + 4)) | 0xC;
-            keyArray[i] *= ((i + i) * i) + 0xCF;
-            keyArray[i] += _byteswap_ulong(0x6F9A5EC1);
-            keyArray[i] >>= 0xF;
+            key_array[i] ^= (~(i % 2) ^ (i + 1) * (i + 1) >> 0xC) | 0xF;
+            key_array[i] += ((i + 1) * 0xC6A) ^ 0xCF6A9F;
+            key_array[i] <<= 0xC;
+            key_array[i] -= 0x7F9A ^ (~(i % 2) * (i + 1)) | 0xA;
+            key_array[i] *= ((i + i) * i) + 0x76A;
+            key_array[i] ^= _byteswap_ulong(0xC5A9E6A1);
+            key_array[i] >>= 0xC;
+
+            key_array[i] *= (~(i % 4) ^ (i + 0xC) * (i + 0xA) >> 0xFF) | 0xA;
+            key_array[i] -= ((i * 4) * 0x5A8E) ^ 0xA5E89F;
+            key_array[i] <<= 0xA;
+            key_array[i] ^= 0xC63EA ^ (~(i % 3) * (i + 4)) | 0xC;
+            key_array[i] *= ((i + i) * i) + 0xCF;
+            key_array[i] += _byteswap_ulong(0x6F9A5EC1);
+            key_array[i] >>= 0xF;
         }
 
         // NOTE: Move into previous loop?
-        for (int i = 0; i < sizeof(keyArray) / sizeof(std::uintptr_t); i++)
+        for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
         {
-            ptrAddress ^= keyArray[i];
+            ptr_address ^= key_array[i];
         }
 
-        return (void*)ptrAddress;
+        return (t)ptr_address;
     }
 
-    __forceinline void* Decrypt(void* inPtr)
+    template <typename t>
+    __forceinline t dec(void* in_ptr)
     {
-        std::uintptr_t ptrAddress = (std::uintptr_t)inPtr;
+        std::uintptr_t ptr_address = (std::uintptr_t)in_ptr;
 
-        std::uintptr_t keyArray[18];
-        keyArray[0] = 0xC7FA8EF6;
-        keyArray[1] = (std::uintptr_t)GetInstance();
-        keyArray[2] = 0xA9F6EFC2;
-        keyArray[3] = (std::uintptr_t)GetBase();
-        keyArray[4] = 0x5A98F6C1;
-        keyArray[5] = (std::uintptr_t)GetPeb();
-        keyArray[6] = 0x6C9F5E8A;
-        keyArray[7] = 0xFB38B773;
-        keyArray[8] = (std::uintptr_t)GetBase() ^ (std::uintptr_t)GetPeb();
-        keyArray[9] = 0x5216D58A;
-        keyArray[10] = 0xECDF0931;
-        keyArray[11] = 0x5DA5FCEF;
-        keyArray[12] = (std::uintptr_t)GetInstance() ^ (std::uintptr_t)GetBase();
-        keyArray[13] = 0x95ACF30D;
-        keyArray[14] = 0x2E2CDFE2;
-        keyArray[15] = 0x824E7BD4;
-        keyArray[16] = (std::uintptr_t)GetInstance() ^ (std::uintptr_t)GetPeb();
-        keyArray[17] = 0x4D703C6C;
+        std::uintptr_t key_array[18];
+        key_array[0] = 0xC7FA8EF6;
+        key_array[1] = (std::uintptr_t)get_instance();
+        key_array[2] = 0xA9F6EFC2;
+        key_array[3] = (std::uintptr_t)get_base();
+        key_array[4] = 0x5A98F6C1;
+        key_array[5] = (std::uintptr_t)get_peb();
+        key_array[6] = 0x6C9F5E8A;
+        key_array[7] = 0xFB38B773;
+        key_array[8] = (std::uintptr_t)get_base() ^ (std::uintptr_t)get_peb();
+        key_array[9] = 0x5216D58A;
+        key_array[10] = 0xECDF0931;
+        key_array[11] = 0x5DA5FCEF;
+        key_array[12] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_base();
+        key_array[13] = 0x95ACF30D;
+        key_array[14] = 0x2E2CDFE2;
+        key_array[15] = 0x824E7BD4;
+        key_array[16] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_peb();
+        key_array[17] = 0x4D703C6C;
 
-        for (int i = 0; i < sizeof(keyArray) / sizeof(std::uintptr_t); i++)
+        for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
         {
-            keyArray[i] ^= (~(i % 2) ^ (i + 1) * (i + 1) >> 0xC) | 0xF;
-            keyArray[i] += ((i + 1) * 0xC6A) ^ 0xCF6A9F;
-            keyArray[i] <<= 0xC;
-            keyArray[i] -= 0x7F9A ^ (~(i % 2) * (i + 1)) | 0xA;
-            keyArray[i] *= ((i + i) * i) + 0x76A;
-            keyArray[i] ^= _byteswap_ulong(0xC5A9E6A1);
-            keyArray[i] >>= 0xC;
+            if (i < 12)
+            {
+                static int* random = get_random_array();
+                if (random)
+                {
+                    key_array[i] ^= random[i];
+                }
+            }
 
-            keyArray[i] *= (~(i % 4) ^ (i + 0xC) * (i + 0xA) >> 0xFF) | 0xA;
-            keyArray[i] -= ((i * 4) * 0x5A8E) ^ 0xA5E89F;
-            keyArray[i] <<= 0xA;
-            keyArray[i] ^= 0xC63EA ^ (~(i % 3) * (i + 4)) | 0xC;
-            keyArray[i] *= ((i + i) * i) + 0xCF;
-            keyArray[i] += _byteswap_ulong(0x6F9A5EC1);
-            keyArray[i] >>= 0xF;
+            key_array[i] ^= (~(i % 2) ^ (i + 1) * (i + 1) >> 0xC) | 0xF;
+            key_array[i] += ((i + 1) * 0xC6A) ^ 0xCF6A9F;
+            key_array[i] <<= 0xC;
+            key_array[i] -= 0x7F9A ^ (~(i % 2) * (i + 1)) | 0xA;
+            key_array[i] *= ((i + i) * i) + 0x76A;
+            key_array[i] ^= _byteswap_ulong(0xC5A9E6A1);
+            key_array[i] >>= 0xC;
+
+            key_array[i] *= (~(i % 4) ^ (i + 0xC) * (i + 0xA) >> 0xFF) | 0xA;
+            key_array[i] -= ((i * 4) * 0x5A8E) ^ 0xA5E89F;
+            key_array[i] <<= 0xA;
+            key_array[i] ^= 0xC63EA ^ (~(i % 3) * (i + 4)) | 0xC;
+            key_array[i] *= ((i + i) * i) + 0xCF;
+            key_array[i] += _byteswap_ulong(0x6F9A5EC1);
+            key_array[i] >>= 0xF;
         }
 
         // NOTE: Move into previous loop?
-        for (int i = 0; i < sizeof(keyArray) / sizeof(std::uintptr_t); i++)
+        for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
         {
-            ptrAddress ^= keyArray[i];
+            ptr_address ^= key_array[i];
         }
 
-        return (void*)ptrAddress;
+        return (t)ptr_address;
     }
 };
 
-inline Pointer* g_ptr = new Pointer();
+#define ENCODE(type, ptr) g_crypt->enc<type>(ptr)
+#define DECODE(type, ptr) g_crypt->dec<type>(ptr)
+
+inline pointer_encryption* g_crypt = new pointer_encryption();
