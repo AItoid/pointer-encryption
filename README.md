@@ -1,5 +1,12 @@
 ### pointer-encryption
-Simple pointer-protection to prevent easy-access of pointers.
+Simple pointer-protection to prevent easy-access of pointers for x64 and x86.
+
+### Security measures
+- Random keys based on RNG.
+- Random keys based on build time.
+- Dynamic key based on executable base address.
+- Dynamic key based on PEB address.
+- Dynamic key based on pointer encryption class instance.
 
 ### Pseudo-code
 Below is the produced pseudo-code from encrypting and decrypting a pointer in x64.
@@ -52,11 +59,11 @@ int __fastcall main(int argc, const char **argv, const char **envp)
   unsigned __int64 v47; // [rsp+188h] [rbp+88h]
   _DWORD *v48; // [rsp+190h] [rbp+90h]
 
-  v47 = operator new(0x10ui64);
-  *v47 = 0i64;
+  v47 = (unsigned __int64)operator new(0x10ui64);
+  *(_OWORD *)v47 = 0i64;
   v3 = qword_140007B48;
   v43[0] = 3355086582i64;
-  v4 = (*NtCurrentTeb()->ThreadLocalStoragePointer + 4i64);
+  v4 = (_DWORD *)(*(_QWORD *)NtCurrentTeb()->ThreadLocalStoragePointer + 4i64);
   v48 = v4;
   if ( dword_140007B28 > *v4 )
   {
@@ -68,13 +75,13 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     }
   }
   v43[1] = qword_140006738;
-  v43[2] = 2851532738i64;
+  v43[2] = 2851533032i64;
   if ( dword_140006730 > *v4 )
   {
     Init_thread_header(&dword_140006730);
     if ( dword_140006730 == -1 )
     {
-      qword_140007B30 = GetModuleHandleA(0i64);
+      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
       Init_thread_footer(&dword_140006730);
     }
   }
@@ -85,19 +92,19 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B18);
     if ( dword_140007B18 == -1 )
     {
-      qword_140006778 = NtCurrentPeb();
+      qword_140006778 = (__int64)NtCurrentPeb();
       Init_thread_footer(&dword_140007B18);
     }
   }
   v43[5] = qword_140006778;
   v43[6] = 1822383754i64;
-  v43[7] = 4214798195i64;
+  v43[7] = 4214798505i64;
   if ( dword_140006730 > *v4 )
   {
     Init_thread_header(&dword_140006730);
     if ( dword_140006730 == -1 )
     {
-      qword_140007B30 = GetModuleHandleA(0i64);
+      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
       Init_thread_footer(&dword_140006730);
     }
   }
@@ -107,7 +114,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B18);
     if ( dword_140007B18 == -1 )
     {
-      qword_140006778 = NtCurrentPeb();
+      qword_140006778 = (__int64)NtCurrentPeb();
       Init_thread_footer(&dword_140007B18);
     }
   }
@@ -130,12 +137,12 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140006730);
     if ( dword_140006730 == -1 )
     {
-      qword_140007B30 = GetModuleHandleA(0i64);
+      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
       Init_thread_footer(&dword_140006730);
     }
   }
   v43[12] = qword_140007B30 ^ v6;
-  v43[13] = 2511139597i64;
+  v43[13] = 2511139753i64;
   v43[14] = 774692834i64;
   v43[15] = 2186181588i64;
   if ( dword_140007B28 > *v4 )
@@ -153,19 +160,19 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B18);
     if ( dword_140007B18 == -1 )
     {
-      qword_140006778 = NtCurrentPeb();
+      qword_140006778 = (__int64)NtCurrentPeb();
       Init_thread_footer(&dword_140007B18);
     }
   }
   v43[16] = qword_140006778 ^ v7;
-  v43[17] = 1299201132i64;
+  v43[17] = 1299201289i64;
   v8 = 0;
   v9 = 0;
   v45 = 0;
   v10 = 0i64;
   v11 = v43;
   v12 = 3178;
-  v13 = &unk_140006740;
+  v13 = (unsigned int *)&unk_140006740;
   do
   {
     if ( v8 < 12 )
@@ -207,27 +214,27 @@ int __fastcall main(int argc, const char **argv, const char **envp)
               v4 = v48;
             }
             byte_14000672C = 1;
-            v13 = &unk_140006740;
+            v13 = (unsigned int *)&unk_140006740;
           }
-          qword_140006770 = &unk_140006740;
+          qword_140006770 = (__int64)&unk_140006740;
           Init_thread_footer(&dword_140007B38);
         }
         v9 = v45;
       }
       if ( qword_140006770 )
-        *v11 = *(v10 + qword_140006770) ^ *v11;
+        *v11 = *(int *)(v10 + qword_140006770) ^ (unsigned __int64)*v11;
     }
     v20 = v8 + 1;
     v21 = ((2 * v8 * v8 + 207)
-         * (((~(v8 % 3) * (v20 + 3)) ^ 0xC63E2i64 | 0xC) ^ ((~(v8 % 4) ^ (((v20 + 9) * (v20 + 11)) >> 31) | 0xA)
-                                                          * (((((2 * v8 * v8 + 1898)
-                                                              * ((((v12 ^ 0xCF6A9Fi64)
-                                                                 + (*v11 ^ (~(v8 % 2) ^ ((v20 * v20) >> 12) | 0xF))) << 12)
-                                                               - ((v20 * ~(v8 % 2)) ^ 0x7F90i64 | 0xA))) ^ 0xA1E6A000) >> 2) & 0x3FFFFFFFFFFFFC00i64)
-                                                          - ((v9 ^ 0xA5E89Fi64) << 10)))
+         * (((int)(~(v8 % 3) * (v20 + 3)) ^ 0xC63E2i64 | 0xC) ^ ((~(v8 % 4) ^ (unsigned __int64)((__int64)(int)((v20 + 9) * (v20 + 11)) >> 31) | 0xA)
+                                                               * (((((2 * v8 * v8 + 1898)
+                                                                   * ((((v12 ^ 0xCF6A9Fi64)
+                                                                      + (*v11 ^ (~(v8 % 2) ^ (unsigned __int64)((__int64)(int)(v20 * v20) >> 12) | 0xF))) << 12)
+                                                                    - ((int)(v20 * ~(v8 % 2)) ^ 0x7F90i64 | 0xA))) ^ 0xA1E6A000) >> 2) & 0x3FFFFFFFFFFFFC00i64)
+                                                               - ((v9 ^ 0xA5E89Fi64) << 10)))
          + 3244202607u) >> 15;
     *v11 = v21;
-    v22 = (v21 ^ v47);
+    v22 = (const void *)(v21 ^ v47);
     v47 ^= v21;
     ++v8;
     v12 += 3178;
@@ -250,13 +257,13 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     }
   }
   v44[1] = qword_140006738;
-  v44[2] = 2851532738i64;
+  v44[2] = 2851533032i64;
   if ( dword_140006730 > *v4 )
   {
     Init_thread_header(&dword_140006730);
     if ( dword_140006730 == -1 )
     {
-      qword_140007B30 = GetModuleHandleA(0i64);
+      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
       Init_thread_footer(&dword_140006730);
     }
   }
@@ -267,19 +274,19 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B18);
     if ( dword_140007B18 == -1 )
     {
-      qword_140006778 = NtCurrentPeb();
+      qword_140006778 = (__int64)NtCurrentPeb();
       Init_thread_footer(&dword_140007B18);
     }
   }
   v44[5] = qword_140006778;
   v44[6] = 1822383754i64;
-  v44[7] = 4214798195i64;
+  v44[7] = 4214798505i64;
   if ( dword_140006730 > *v4 )
   {
     Init_thread_header(&dword_140006730);
     if ( dword_140006730 == -1 )
     {
-      qword_140007B30 = GetModuleHandleA(0i64);
+      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
       Init_thread_footer(&dword_140006730);
     }
   }
@@ -289,7 +296,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B18);
     if ( dword_140007B18 == -1 )
     {
-      qword_140006778 = NtCurrentPeb();
+      qword_140006778 = (__int64)NtCurrentPeb();
       Init_thread_footer(&dword_140007B18);
     }
   }
@@ -312,12 +319,12 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140006730);
     if ( dword_140006730 == -1 )
     {
-      qword_140007B30 = GetModuleHandleA(0i64);
+      qword_140007B30 = (__int64)GetModuleHandleA(0i64);
       Init_thread_footer(&dword_140006730);
     }
   }
   v44[12] = qword_140007B30 ^ v25;
-  v44[13] = 2511139597i64;
+  v44[13] = 2511139753i64;
   v44[14] = 774692834i64;
   v44[15] = 2186181588i64;
   if ( dword_140007B28 > *v4 )
@@ -335,12 +342,12 @@ int __fastcall main(int argc, const char **argv, const char **envp)
     Init_thread_header(&dword_140007B18);
     if ( dword_140007B18 == -1 )
     {
-      qword_140006778 = NtCurrentPeb();
+      qword_140006778 = (__int64)NtCurrentPeb();
       Init_thread_footer(&dword_140007B18);
     }
   }
   v44[16] = qword_140006778 ^ v26;
-  v44[17] = 1299201132i64;
+  v44[17] = 1299201289i64;
   v27 = 0;
   v28 = 0;
   v46 = 0;
@@ -359,7 +366,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
           if ( !byte_14000672C )
           {
             v32 = 0;
-            v33 = &unk_140006740;
+            v33 = (unsigned int *)&unk_140006740;
             do
             {
               if ( dword_140006780 > *v4 )
@@ -394,25 +401,25 @@ int __fastcall main(int argc, const char **argv, const char **envp)
             while ( v32 < 6 );
             byte_14000672C = 1;
           }
-          qword_140007B40 = &unk_140006740;
+          qword_140007B40 = (__int64)&unk_140006740;
           Init_thread_footer(&dword_140007B50);
         }
         v28 = v46;
       }
       if ( qword_140007B40 )
-        *v30 = *(v29 + qword_140007B40) ^ *v30;
+        *v30 = *(int *)(v29 + qword_140007B40) ^ (unsigned __int64)*v30;
     }
     v39 = v27 + 1;
     v40 = ((2 * v27 * v27 + 207)
-         * (((~(v27 % 3) * (v39 + 3)) ^ 0xC63E2i64 | 0xC) ^ ((~(v27 % 4) ^ (((v39 + 9) * (v39 + 11)) >> 31) | 0xA)
-                                                           * (((((2 * v27 * v27 + 1898)
-                                                               * ((((v31 ^ 0xCF6A9Fi64)
-                                                                  + (*v30 ^ (~(v27 % 2) ^ ((v39 * v39) >> 12) | 0xF))) << 12)
-                                                                - ((v39 * ~(v27 % 2)) ^ 0x7F90i64 | 0xA))) ^ 0xA1E6A000) >> 2) & 0x3FFFFFFFFFFFFC00i64)
-                                                           - ((v28 ^ 0xA5E89Fi64) << 10)))
+         * (((int)(~(v27 % 3) * (v39 + 3)) ^ 0xC63E2i64 | 0xC) ^ ((~(v27 % 4) ^ (unsigned __int64)((__int64)(int)((v39 + 9) * (v39 + 11)) >> 31) | 0xA)
+                                                                * (((((2 * v27 * v27 + 1898)
+                                                                    * ((((v31 ^ 0xCF6A9Fi64)
+                                                                       + (*v30 ^ (~(v27 % 2) ^ (unsigned __int64)((__int64)(int)(v39 * v39) >> 12) | 0xF))) << 12)
+                                                                     - ((int)(v39 * ~(v27 % 2)) ^ 0x7F90i64 | 0xA))) ^ 0xA1E6A000) >> 2) & 0x3FFFFFFFFFFFFC00i64)
+                                                                - ((v28 ^ 0xA5E89Fi64) << 10)))
          + 3244202607u) >> 15;
     *v30 = v40;
-    v41 = (v40 ^ v47);
+    v41 = (const void *)(v40 ^ v47);
     v47 ^= v40;
     ++v27;
     v31 += 3178;
