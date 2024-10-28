@@ -65,22 +65,22 @@ public:
         std::uintptr_t key_array[18];
         key_array[0] = 0xC7FA8EF6;
         key_array[1] = (std::uintptr_t)get_instance();
-        key_array[2] = 0xA9F6EFC2;
+        key_array[2] = 0xA9F6EFC2 + static_cast<int>(__DATE__[0]) + static_cast<int>(__DATE__[1]) + static_cast<int>(__DATE__[2]);
         key_array[3] = (std::uintptr_t)get_base();
         key_array[4] = 0x5A98F6C1;
         key_array[5] = (std::uintptr_t)get_peb();
         key_array[6] = 0x6C9F5E8A;
-        key_array[7] = 0xFB38B773;
+        key_array[7] = 0xFB38B773 + static_cast<int>(__TIMESTAMP__[0]) + static_cast<int>(__TIMESTAMP__[1]) + static_cast<int>(__TIMESTAMP__[2]);
         key_array[8] = (std::uintptr_t)get_base() ^ (std::uintptr_t)get_peb();
         key_array[9] = 0x5216D58A;
         key_array[10] = 0xECDF0931;
         key_array[11] = 0x5DA5FCEF;
         key_array[12] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_base();
-        key_array[13] = 0x95ACF30D;
+        key_array[13] = 0x95ACF30D + static_cast<int>(__TIMESTAMP__[11]) + static_cast<int>(__TIMESTAMP__[12]) + static_cast<int>(__TIMESTAMP__[14]);
         key_array[14] = 0x2E2CDFE2;
         key_array[15] = 0x824E7BD4;
         key_array[16] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_peb();
-        key_array[17] = 0x4D703C6C;
+        key_array[17] = 0x4D703C6C + static_cast<int>(__TIMESTAMP__[15]) + static_cast<int>(__TIMESTAMP__[17]) + static_cast<int>(__TIMESTAMP__[18]);
 
         for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
         {
@@ -123,22 +123,22 @@ public:
         std::uintptr_t key_array[18];
         key_array[0] = 0xC7FA8EF6;
         key_array[1] = (std::uintptr_t)get_instance();
-        key_array[2] = 0xA9F6EFC2;
+        key_array[2] = 0xA9F6EFC2 + static_cast<int>(__DATE__[0]) + static_cast<int>(__DATE__[1]) + static_cast<int>(__DATE__[2]);
         key_array[3] = (std::uintptr_t)get_base();
         key_array[4] = 0x5A98F6C1;
         key_array[5] = (std::uintptr_t)get_peb();
         key_array[6] = 0x6C9F5E8A;
-        key_array[7] = 0xFB38B773;
+        key_array[7] = 0xFB38B773 + static_cast<int>(__TIMESTAMP__[0]) + static_cast<int>(__TIMESTAMP__[1]) + static_cast<int>(__TIMESTAMP__[2]);
         key_array[8] = (std::uintptr_t)get_base() ^ (std::uintptr_t)get_peb();
         key_array[9] = 0x5216D58A;
         key_array[10] = 0xECDF0931;
         key_array[11] = 0x5DA5FCEF;
         key_array[12] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_base();
-        key_array[13] = 0x95ACF30D;
+        key_array[13] = 0x95ACF30D + static_cast<int>(__TIMESTAMP__[11]) + static_cast<int>(__TIMESTAMP__[12]) + static_cast<int>(__TIMESTAMP__[14]);
         key_array[14] = 0x2E2CDFE2;
         key_array[15] = 0x824E7BD4;
         key_array[16] = (std::uintptr_t)get_instance() ^ (std::uintptr_t)get_peb();
-        key_array[17] = 0x4D703C6C;
+        key_array[17] = 0x4D703C6C + static_cast<int>(__TIMESTAMP__[15]) + static_cast<int>(__TIMESTAMP__[17]) + static_cast<int>(__TIMESTAMP__[18]);
 
         for (int i = 0; i < sizeof(key_array) / sizeof(std::uintptr_t); i++)
         {
