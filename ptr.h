@@ -57,9 +57,8 @@ private:
     }
 
 public:
-
     template <typename t>
-    __forceinline t process(void* in_ptr, bool decrypt)
+    __forceinline t process(void* in_ptr)
     {
         std::uintptr_t ptr_address = (std::uintptr_t)in_ptr;
 
@@ -107,12 +106,20 @@ public:
             key_array[i] *= ((i + i) * i) + 0xCF;
             key_array[i] += _byteswap_ulong(0x6F9A5EC1);
             key_array[i] >>= 0xF;
-            
-            // Just for looks...
-            if (decrypt)
+
+            bool should_decrypt = ptr_address & 0x80000000000;
+
+            // Decrypt only when we should.
+            if (should_decrypt)
+            {
+                ptr_address &= ~(0x80000000000);
                 ptr_address ^= key_array[i];
+            }
             else
+            {
+                ptr_address |= 0x80000000000;
                 ptr_address ^= key_array[i];
+            }
         }
 
         return (t)ptr_address;
